@@ -1,0 +1,102 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "homebridge-http",
+        "scope": null,
+        "escapedName": "homebridge-http",
+        "name": "homebridge-http",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/realank"
+    ]
+  ],
+  "_cnpm_publish_time": 1455614524907,
+  "_from": "homebridge-http@latest",
+  "_id": "homebridge-http@0.0.9",
+  "_inCache": true,
+  "_location": "/homebridge-http",
+  "_nodeVersion": "5.1.0",
+  "_npmOperationalInternal": {
+    "host": "packages-9-west.internal.npmjs.com",
+    "tmp": "tmp/homebridge-http-0.0.9.tgz_1455614522900_0.3017259333282709"
+  },
+  "_npmUser": {
+    "name": "rudders",
+    "email": "a.rudman@binarylight.com.au"
+  },
+  "_npmVersion": "3.7.1",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "homebridge-http",
+    "scope": null,
+    "escapedName": "homebridge-http",
+    "name": "homebridge-http",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npm.taobao.org/homebridge-http/download/homebridge-http-0.0.9.tgz",
+  "_shasum": "1965ab279b5089303dc7c85ad8a2acc0cf22716c",
+  "_shrinkwrap": null,
+  "_spec": "homebridge-http",
+  "_where": "/Users/realank",
+  "author": {
+    "name": "Adrian Rudman"
+  },
+  "bugs": {
+    "url": "https://github.com/rudders/homebridge-http/issues"
+  },
+  "contributors": [
+    {
+      "name": "NovaGL"
+    },
+    {
+      "name": "David Parry"
+    }
+  ],
+  "dependencies": {
+    "polling-to-event": ">=2.0.2",
+    "request": "^2.65.0"
+  },
+  "description": "http(s) plugin for Homebridge: https://github.com/nfarina/homebridge",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "1965ab279b5089303dc7c85ad8a2acc0cf22716c",
+    "size": 7064,
+    "noattachment": false,
+    "tarball": "http://registry.npm.taobao.org/homebridge-http/download/homebridge-http-0.0.9.tgz"
+  },
+  "engines": {
+    "homebridge": ">=0.2.0",
+    "node": ">=0.12.0"
+  },
+  "gitHead": "f8a497ae79416f345c3aeb62f5284cbcef798146",
+  "homepage": "https://github.com/rudders/homebridge-http#readme",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "license": "ISC",
+  "maintainers": [
+    {
+      "name": "rudders",
+      "email": "a.rudman@binarylight.com.au"
+    }
+  ],
+  "name": "homebridge-http",
+  "optionalDependencies": {},
+  "publish_time": 1455614524907,
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rudders/homebridge-http.git"
+  },
+  "scripts": {},
+  "version": "0.0.9"
+}
