@@ -1,5 +1,5 @@
 var Service, Characteristic;
-
+var SwithSer,switchOn = true;
 //regist accessory
 module.exports = function(homebridge){
 	Service = homebridge.hap.Service;
@@ -11,29 +11,53 @@ module.exports = function(homebridge){
 function HttpDummy(log, config) {
 	this.log = log;
 	//realtime polling info
-	this.state = false;
+	this.switchState = false;
+	this.lightState = false;
 	this.currentlevel = 0;
+	this.doorState = false;
 }
 
 HttpDummy.prototype = {
 
-	//status input/output
-	setPowerState: function(powerOn, callback) {
-		this.state = powerOn;
+	//status input/output for light
+	setSwitchPowerState: function(powerOn, callback) {
+		this.log('set switch state' + powerOn);
+		this.switchState = powerOn;
 		callback();
 	},
 
-	getPowerState: function(callback) {
-		callback(null, this.state);
+	getSwitchPowerState: function(callback) {
+		callback(null, this.switchState);
+	},
+
+	setLightPowerState: function(powerOn, callback) {
+		this.log('set light state' + powerOn);
+		this.lightState = powerOn;
+		callback();
+		// this.switchService.setCharacteristic(Characteristic.On,powerOn);
+	},
+
+	getLightPowerState: function(callback) {
+		callback(null, this.lightState);
 	},
 
 	getBrightness: function(callback) {
 		callback(null, this.currentlevel);
-	  },
+	 },
 
 	setBrightness: function(level, callback) {
 
 		this.currentlevel = level;
+		callback();
+	},
+
+	getDoorbell: function(callback) {
+		callback(null,this.doorState)
+	},
+
+	setDoorbell: function(doorState, callback) {
+		this.log('set door state ' + doorState);
+		this.doorState = doorState;
 		callback();
 	},
 
@@ -56,26 +80,48 @@ HttpDummy.prototype = {
 		.setCharacteristic(Characteristic.Model, "Dummy Model")
 		.setCharacteristic(Characteristic.SerialNumber, "Dummy Serial Number");
 
-		this.switchService = new Service.Switch(this.name);
+		//switch
+		this.switchService = new Service.Switch("Switch");
+		SwithSer = this.switchService;
 		this.log("Create Switch");
 		this.switchService
 		.getCharacteristic(Characteristic.On)
-		.on('get', function(callback) {callback(null, that.state)})
-		.on('set', this.setPowerState.bind(this));
+		.on('get', function(callback) {callback(null, that.switchState)})
+		.on('set', this.setSwitchPowerState.bind(this));
 
-		this.lightbulbService = new Service.Lightbulb(this.name);
+		// lightbulb
+		this.lightbulbService = new Service.Lightbulb("LightBulb");
 		this.log("Create Light");
+		this.lightbulbService.getCharacteristic(Characteristic.On).eventEnabled = true;
 		this.lightbulbService
 		.getCharacteristic(Characteristic.On)
-		.on('get', function(callback) {callback(null, that.state)})
-		.on('set', this.setPowerState.bind(this));
+		.on('get', function(callback) {callback(null, that.lightState)})
+		.on('set', this.setLightPowerState.bind(this));
+		
 		this.lightbulbService
 		.addCharacteristic(new Characteristic.Brightness())
 		.on('get', function(callback) {callback(null, that.currentlevel)})
 		.on('set', this.setBrightness.bind(this));
 
+		this.doorbellService = new Service.SmokeSensor("Smoke");
+		this.doorbellService
+		.getCharacteristic(Characteristic.SmokeDetected)
+		.on('get', this.getDoorbell.bind(this))
+
+		// setInterval(function() {
+	 //        this.log("Smoke");
+	 //        this.doorState = !this.doorState
+	 //        this.doorbellService.getCharacteristic(Characteristic.SmokeDetected).setValue(this.doorState);
+  //   	}.bind(this), 10000);
 
 
-		return [informationService,this.switchService, this.lightbulbService];
+		return [informationService,this.switchService,this.lightbulbService, this.doorbellService];
 	}
 };
+
+// randomize our temperature reading every 3 seconds
+setInterval(function() {
+  switchOn = !switchOn
+  // SwithSer.setCharacteristic(Characteristic.On,switchOn);
+  SwithSer.getCharacteristic(Characteristic.On).updateValue(switchOn,null);
+}, 3000);
