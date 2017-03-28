@@ -15,6 +15,7 @@ function HttpDummy(log, config) {
 	this.lightState = false;
 	this.currentlevel = 0;
 	this.doorState = false;
+	this.motionState = false;
 }
 
 HttpDummy.prototype = {
@@ -55,10 +56,8 @@ HttpDummy.prototype = {
 		callback(null,this.doorState)
 	},
 
-	setDoorbell: function(doorState, callback) {
-		this.log('set door state ' + doorState);
-		this.doorState = doorState;
-		callback();
+	getMotionSensor: function(callback) {
+		callback(null,this.motionState)
 	},
 
 	identify: function(callback) {
@@ -108,14 +107,26 @@ HttpDummy.prototype = {
 		.getCharacteristic(Characteristic.SmokeDetected)
 		.on('get', this.getDoorbell.bind(this))
 
+		this.motionService = new Service.MotionSensor("Motion Sensor");
+		this.motionService
+		.getCharacteristic(Characteristic.MotionDetected)
+		.on('get', this.getMotionSensor.bind(this))
+
+		//smoke sensor trigger
 		// setInterval(function() {
 	 //        this.log("Smoke");
 	 //        this.doorState = !this.doorState
 	 //        this.doorbellService.getCharacteristic(Characteristic.SmokeDetected).setValue(this.doorState);
   //   	}.bind(this), 10000);
 
+  		//motion sensor trigger
+  		// setInterval(function() {
+	   //      this.log("motion");
+	   //      this.motionState = !this.motionState
+	   //      this.motionService.getCharacteristic(Characteristic.MotionDetected).setValue(this.motionState);
+    // 	}.bind(this), 10000);
 
-		return [informationService,this.switchService,this.lightbulbService, this.doorbellService];
+		return [informationService,this.switchService,this.lightbulbService, this.doorbellService, this.motionService];
 	}
 };
 
