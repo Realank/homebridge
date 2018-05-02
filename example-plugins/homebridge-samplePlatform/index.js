@@ -1,9 +1,9 @@
 var http = require('http');
 var Accessory, Service, Characteristic, UUIDGen;
-
+var Homebridge
 module.exports = function(homebridge) {
   console.log("homebridge API version: " + homebridge.version);
-
+  Homebridge = homebridge
   // Accessory must be created from PlatformAccessory Constructor
   Accessory = homebridge.platformAccessory;
 
@@ -11,7 +11,7 @@ module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
   UUIDGen = homebridge.hap.uuid;
-  
+  console.log("-=======type: " + Object.keys(homebridge.hap));
   // For platform plugin to be considered as dynamic platform plugin,
   // registerPlatform(pluginName, platformName, constructor, dynamic), dynamic must be true
   homebridge.registerPlatform("homebridge-samplePlatform", "SamplePlatform", SamplePlatform, true);
